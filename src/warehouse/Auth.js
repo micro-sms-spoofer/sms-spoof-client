@@ -65,7 +65,7 @@ const actions = {
         delete axios.defaults.headers.common['Authorization']
         delete axios.defaults.headers.common['X-Username']
         router.push('/login')
-        return
+        return 
     },
     async callSms({commit}, data){
         try {

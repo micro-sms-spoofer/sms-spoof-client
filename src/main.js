@@ -4,7 +4,8 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
-
+import FlashMessage from '@smartweb/vue-flash-message';
+Vue.use(FlashMessage);
 
 Vue.config.productionTip = false
 

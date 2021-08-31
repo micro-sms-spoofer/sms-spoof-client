@@ -29,13 +29,17 @@
 
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import _ from 'lodash'
 export default {
     data() {
         return {
             username: "",
             password: ""
         }
+    },
+    computed: {
+        ...mapGetters(['error','authStatus'])
     },
     methods: {
         ...mapActions(['login']),
@@ -45,9 +49,21 @@ export default {
                 password: this.password
             }
             this.login(user).then(res => {
+                 if(!_.isNil(res)){
                 if(res.data.success){
+                    this.flashMessage.success({
+                                title: 'Success',
+                                message: this.authStatus
+                            });                     
                     this.$router.push('/profile')
                 }
+                 }else{
+                    this.flashMessage.error({
+                        title: 'Error',
+                        message: this.error
+                    });
+                 }
+
             }).catch(err => {
                 console.log(err)
             })

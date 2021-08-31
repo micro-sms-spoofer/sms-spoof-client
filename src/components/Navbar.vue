@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <router-link to="/"  class="navbar-brand" >
       <img src="http://www.clker.com/cliparts/Q/3/k/j/B/6/bomb-outline-black-and-white-hi.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-    SMS Spoofer V2</router-link>
+    SMS Spoofer [v2-beta]</router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,12 +40,18 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
     computed: {
-        ...mapGetters(["isLoggedIn"])
+        ...mapGetters(["isLoggedIn","authStatus"])
     },
     methods: {
         ...mapActions(['logout']),
         logoutUser(){
-            this.logout()
+            this.logout().then(() => {
+                                              this.flashMessage.success({
+                                title: 'Success',
+                                message: this.authStatus
+                            });  
+            })
+            
         }
     }
 };

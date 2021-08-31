@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions,mapGetters } from 'vuex'
 import _ from 'lodash'
 export default {
     data() {
@@ -39,6 +39,9 @@ export default {
             to: "",
             text: ""
         }
+    },
+    computed: {
+        ...mapGetters(['error','authStatus'])
     },
     methods:{
         ...mapActions(['callSms']),
@@ -49,18 +52,33 @@ export default {
                 text: this.text            
             }
             this.callSms(data).then(res => {
+                
                 if(!_.isNil(res)){
                     if(res.data.success){
                         this.from = ''
                         this.to = ''
                         this.text = ''
+                        this.flashMessage.success({
+                                title: 'Success',
+                                message: this.authStatus
+                            }); 
+
+
                     }
+                }else{
+                    this.flashMessage.error({
+                        title: 'Error',
+                        message: this.error
+                    });
                 }
 
             }).catch(err => {
                 console.log(err)
-            })            
+            })   
+                   
+
         }
     }
 }
 </script>
+

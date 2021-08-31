@@ -1,6 +1,6 @@
 <template>
       <div class="container py-4">
-         <div class="alert alert-success" role="alert">
+         <div id="myalertsuc" class="alert alert-success" role="alert">
             {{msg}}
         </div>  
   </div>
@@ -16,7 +16,7 @@ export default {
     mounted () {
         $(document).ready(function () {        
             window.setTimeout(function() {
-                $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+                $("#myalertsuc").fadeTo(1000, 0).slideUp(1000, function(){
                     $(this).remove(); 
                 });
             }, 5000);    
