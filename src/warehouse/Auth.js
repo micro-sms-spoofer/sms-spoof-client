@@ -4,7 +4,7 @@ import router from '../router'
 const state = {
     token: localStorage.getItem('token') || '',
     user: {},
-    status: '',
+    status: null,
     error: null
 };
 
@@ -66,6 +66,18 @@ const actions = {
         delete axios.defaults.headers.common['X-Username']
         router.push('/login')
         return
+    },
+    async callSms({commit}, data){
+        try {
+            commit('sms_request')
+            let res = await axios.post('https://api.unknownclub.net/unkservice/protected/sms/send', data)
+            if(res.data.success){
+                commit('sms_success')
+            }
+            return res;
+        } catch (error) {
+            commit('sms_error', error)
+        }
     }
 }
 
@@ -77,7 +89,7 @@ const mutations = {
     auth_success(state, token, user){
         state.token = token
         state.user = user
-        state.status = 'success'
+        state.status = 'Login success'
         state.error = null
     },
     register_request(state){
@@ -85,28 +97,39 @@ const mutations = {
         state.status = 'loading'
     },
     register_success(state){
-        state.status = 'success'
+        state.status = 'Register success'
         state.error = null
     },
     logout(state){
         state.error = null
         state.token = ''
         state.user = {}
-        state.status = ''
+        state.status = 'Logout success'
     },
-    profile_request(state){
-        state.status = 'loading'
+    profile_request(/** state */){
+        //state.status = 'loading'
     },
     user_profile(state, user){
         state.user = user
-        state.status = 'success'
+        //state.status = 'success'
     },
     register_error(state, error){
         state.error = error.response.data.msg
     },
     auth_error(state, error){
         state.error = error.response.data.msg
-    }
+    },
+    sms_request(state){
+        state.error = null
+        state.status = 'loading'
+    },
+    sms_success(state){
+        state.status = 'Send Sms success'
+        state.error = null
+    },
+    sms_error(state, error){
+        state.error = error.response.data.msg
+    },
 }
 
 export default {

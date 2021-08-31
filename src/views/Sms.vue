@@ -1,5 +1,5 @@
 <template>
-      <div class="container py-4">
+    <div class="container py-4">
     <div class="p-5 mb-4 bg-light rounded-3">
       <div class="container-fluid py-5">
           <div class="card mx-auto">
@@ -30,7 +30,8 @@
 </template>
 
 <script>
-
+import { mapActions } from 'vuex'
+import _ from 'lodash'
 export default {
     data() {
         return {
@@ -40,8 +41,25 @@ export default {
         }
     },
     methods:{
+        ...mapActions(['callSms']),
         sendSms(){
-            alert('OK')
+            let data = {
+                from: this.from,
+                to: this.to,
+                text: this.text            
+            }
+            this.callSms(data).then(res => {
+                if(!_.isNil(res)){
+                    if(res.data.success){
+                        this.from = ''
+                        this.to = ''
+                        this.text = ''
+                    }
+                }
+
+            }).catch(err => {
+                console.log(err)
+            })            
         }
     }
 }

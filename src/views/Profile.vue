@@ -9,8 +9,8 @@
                 <div class="card-body"  v-if="user">
 
                     <ul class="list-group">
-                        <li class="list-group-item">Email: {{user.email}}</li>
-                        <li class="list-group-item">Username: {{user.username}}</li>
+                        <li class="list-group-item"><b>Email</b> {{user.email}}</li>
+                        <li class="list-group-item"><b>Username</b>: {{user.username}}</li>
                     </ul>
                 </div>
             </div>
