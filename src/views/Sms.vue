@@ -17,7 +17,7 @@
                             <input id="to" type="text" placeholder="66612400999" name="to" v-model="to" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="text">To</label>
+                            <label for="text">Text</label>
                             <input id="text" type="text" placeholder="Fuck you" name="text" v-model="text" class="form-control" required>
                         </div>                        
                         <input type="submit" class="btn btn-dark mt-2" value="Send">                     
