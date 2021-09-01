@@ -4,9 +4,12 @@
       <div class="container-fluid py-5">
           <div class="card mx-auto">
             <div class="card-header text-white bg-dark">
-              <h4>Sms Spoofing</h4>
+              <h4>Sms Spoofing | Remaining: {{rateLimit}}</h4>
             </div>
             <div class="card-body">
+<div class="alert alert-danger" role="alert">
+  We sorry for limiting this service for 10 sms per user per day!
+</div>                
                     <form @submit.prevent="sendSms">
                         <div class="form-group">
                             <label for="from">From</label>
@@ -41,7 +44,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['error','authStatus'])
+        ...mapGetters(['error','authStatus', 'rateLimit'])
     },
     methods:{
         ...mapActions(['callSms']),

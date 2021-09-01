@@ -5,14 +5,16 @@ const state = {
     token: localStorage.getItem('token') || '',
     user: {},
     status: null,
-    error: null
+    error: null,
+    rate_limit: '...'
 };
 
 const getters = {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
     user: state => state.user,
-    error: state => state.error
+    error: state => state.error,
+    rateLimit: state => state.rate_limit
 };
 
 const actions = {
@@ -68,16 +70,24 @@ const actions = {
         return 
     },
     async callSms({commit}, data){
+        let g_rate_limit = '...'
         try {
             commit('sms_request')
             let res = await axios.post('https://api.unknownclub.net/unkservice/protected/sms/send', data)
             if(res.data.success){
-                commit('sms_success')
+                g_rate_limit = res.headers["ratelimit-remaining"]
+                commit('sms_success', g_rate_limit)
+               
             }
+            //console.log(res)
             return res;
         } catch (error) {
+            //console.log(error.response)
+            g_rate_limit = error.response.headers['ratelimit-remaining']
             commit('sms_error', error)
         }
+
+        commit('set_rate_limit', g_rate_limit)
     }
 }
 
@@ -123,13 +133,17 @@ const mutations = {
         state.error = null
         state.status = 'loading'
     },
-    sms_success(state){
+    sms_success(state, limit){
         state.status = 'Send Sms success'
         state.error = null
+        state.rate_limit = limit
     },
     sms_error(state, error){
-        state.error = error.response.data.msg
+        state.error = error.response.data.msg || error.response.data.message
     },
+    set_rate_limit(state, limit){
+        state.rate_limit = limit
+    }
 }
 
 export default {
