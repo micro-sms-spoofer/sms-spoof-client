@@ -4,11 +4,12 @@
     <router-link to="/"  class="navbar-brand" >
       <img src="http://www.clker.com/cliparts/Q/3/k/j/B/6/bomb-outline-black-and-white-hi.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
     SMS Spoofer [v2-beta]</router-link>
+    <a class="navbar-brand" href="https://www.buymeacoffee.com/unknownclub" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 140px !important;" ></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">       
         <li class="nav-item">
           <router-link tag="li" class="nav-link" to="/" v-if="!isLoggedIn">Home</router-link>
         </li>
